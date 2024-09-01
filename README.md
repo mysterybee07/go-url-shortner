@@ -2,13 +2,13 @@
 
 This project is a simple URL shortener service built using Go and the Fiber web framework. It allows users to shorten long URLs and retrieve the original URLs using the shortened versions. The service is designed to be lightweight, fast, and easy to use.
 
-Features
+# Features
 Shorten long URLs
 Retrieve original URLs from shortened versions
 Basic error handling for invalid URLs
 Unit tests using github.com/stretchr/testify/assert
 
-Prerequisites
+# Prerequisites
 Before running the service, ensure you have the following installed on your machine:
 
 Go (go1.23.0)
