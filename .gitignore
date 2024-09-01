@@ -1,5 +1,3 @@
 # Ignore temporary files
 tmp/
 
-# Ignore images directory
-images/
