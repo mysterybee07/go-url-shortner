@@ -28,12 +28,11 @@ func Base62Encode(num int64) string {
 	return encoded
 }
 
-// GenerateShortKey generates a unique short key using Base62 encoding.
+// a unique short key generation using Base62 encoding.
 func GenerateShortKey() string {
 	mu.Lock()
 	defer mu.Unlock()
 
-	// Increment the counter to get a new unique identifier.
 	counter++
 	return Base62Encode(counter)
 }
