@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/mysterybee07/go-url-shortner/helpers"
@@ -23,14 +24,9 @@ type ShortenRequest struct {
 	LongURL string `json:"long_url"`
 }
 
-// response returned by POST /shorten.
-type ShortenResponse struct {
-	ShortURL string `json:"short_url"`
-}
-
 func (urlShortner *UrlShortener) ShortenUrl(c *fiber.Ctx) error {
 	// req := new(ShortenRequest)
-	var req *ShortenRequest
+	var req ShortenRequest
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Invalid request payload",
@@ -44,13 +40,21 @@ func (urlShortner *UrlShortener) ShortenUrl(c *fiber.Ctx) error {
 		})
 	}
 
+	//url format validation
+	_, err := url.ParseRequestURI(req.LongURL)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid URL format",
+		})
+	}
+
 	shortKey := helpers.GenerateShortKey()
 	urlShortner.Urls[shortKey] = req.LongURL
 
 	shortURL := fmt.Sprintf("http://localhost:8080/%s", shortKey)
 
-	return c.Status(fiber.StatusOK).JSON(ShortenResponse{
-		ShortURL: shortURL,
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"short_url": shortURL,
 	})
 }
 

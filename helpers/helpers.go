@@ -1,38 +1,35 @@
 package helpers
 
 import (
-	"sync"
+	"crypto/rand"
+	"math/big"
 )
 
-const (
-	base62Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-)
+const base62Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-var (
-	counter int64
-	mu      sync.Mutex
-)
+func EncodeToBase62(data []byte) string {
+	var result string
+	num := new(big.Int).SetBytes(data)
+	base := big.NewInt(62)
+	zero := big.NewInt(0)
 
-// Base62Encode converts a number to a Base62 encoded string.
-func Base62Encode(num int64) string {
-	if num == 0 {
-		return string(base62Chars[0])
+	for num.Cmp(zero) > 0 {
+		mod := new(big.Int)
+		num.DivMod(num, base, mod)
+		result = string(base62Chars[mod.Int64()]) + result
 	}
 
-	encoded := ""
-	for num > 0 {
-		remainder := num % 62
-		encoded = string(base62Chars[remainder]) + encoded
-		num = num / 62
-	}
-	return encoded
+	return result
 }
 
-// a unique short key generation using Base62 encoding.
+// generates a random short key for URLs
 func GenerateShortKey() string {
-	mu.Lock()
-	defer mu.Unlock()
 
-	counter++
-	return Base62Encode(counter)
+	b := make([]byte, 3)
+	_, err := rand.Read(b)
+	if err != nil {
+		return ""
+	}
+
+	return EncodeToBase62(b)
 }

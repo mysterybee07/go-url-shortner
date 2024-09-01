@@ -11,7 +11,6 @@ func main() {
 	shortner := handlers.NewUrlShortner()
 
 	// fmt.Println(shortner)
-	// app.Get("/", shortner.Index)
 	app.Post("/shorten", shortner.ShortenUrl)
 	app.Get("/:shortcode", shortner.RedirectUser)
 
