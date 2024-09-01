@@ -63,7 +63,7 @@ Request Body: JSON object with the long URL
 
 Response: JSON object with the shortened URL
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 GET /{shortcode}
 
@@ -71,14 +71,14 @@ Request: Access the shortened URL directly
 
 Response: Redirects to the original long URL
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 # Running Tests
 To ensure that the service is functioning correctly, you can run the tests using the following command:
 
        go test ./tests -v
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 This command will execute all tests in the project and display the results in the terminal. The tests are written using the github.com/stretchr/testify/assert package for easy assertions.
 
