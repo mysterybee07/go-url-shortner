@@ -31,11 +31,13 @@ or Using ssh:
 
     git clone git@github.com:mysterybee07/go-url-shortner.git
 
+# Install dependencies: 
+
 Redirect to the project directory:
 
        cd go-url-shortener
 
-Install dependencies: Use Go modules to install the required dependencies:
+Use Go modules to install the required dependencies:
   
        go mod tidy
 
