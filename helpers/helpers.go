@@ -3,6 +3,7 @@ package helpers
 import (
 	"crypto/rand"
 	"math/big"
+	"net/url"
 )
 
 const base62Chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -32,4 +33,18 @@ func GenerateShortKey() string {
 	}
 
 	return EncodeToBase62(b)
+}
+
+func ValidateURL(urlStr string) bool {
+	parsedURL, err := url.Parse(urlStr)
+	if err != nil || parsedURL.Scheme == "" || parsedURL.Host == "" {
+		return false
+	}
+
+	// Check for http or https
+	if parsedURL.Scheme != "http" && parsedURL.Scheme != "https" {
+		return false
+	}
+
+	return true
 }

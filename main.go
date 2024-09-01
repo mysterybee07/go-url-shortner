@@ -10,7 +10,7 @@ func main() {
 
 	shortner := handlers.NewUrlShortner()
 
-	// fmt.Println(shortner)
+	// routes setup
 	app.Post("/shorten", shortner.ShortenUrl)
 	app.Get("/:shortcode", shortner.RedirectUser)
 
