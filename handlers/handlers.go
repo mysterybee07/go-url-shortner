@@ -37,7 +37,7 @@ func (urlShortner *UrlShortener) ShortenUrl(c *fiber.Ctx) error {
 			"error": "URL parameter is missing",
 		})
 	}
-	// URL format validation
+	// Format validation of URL
 	if !helpers.ValidateURL(req.LongURL) {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Invalid URL format",
@@ -56,6 +56,7 @@ func (urlShortner *UrlShortener) ShortenUrl(c *fiber.Ctx) error {
 }
 
 func (urlShortner *UrlShortener) RedirectUser(c *fiber.Ctx) error {
+	//take shortCode from request parameter
 	shortCode := c.Params("shortcode")
 	if shortCode == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -63,12 +64,13 @@ func (urlShortner *UrlShortener) RedirectUser(c *fiber.Ctx) error {
 		})
 	}
 
+	//extract original url from request shortCode
 	originalUrl, exists := urlShortner.Urls[shortCode]
 	if !exists {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"error": "Shortened Key not found",
 		})
 	}
-
+	//redirect users to original url
 	return c.Redirect(originalUrl, fiber.StatusMovedPermanently)
 }
