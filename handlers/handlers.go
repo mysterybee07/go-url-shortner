@@ -44,11 +44,11 @@ func (urlShortner *UrlShortener) ShortenUrl(c *fiber.Ctx) error {
 		})
 	}
 
-	shortKey := helpers.GenerateShortKey()
-	urlShortner.Urls[shortKey] = req.LongURL
+	shortCode := helpers.GenerateShortCode()
+	urlShortner.Urls[shortCode] = req.LongURL
 
 	//generated short key
-	shortURL := fmt.Sprintf("http://localhost:8080/%s", shortKey)
+	shortURL := fmt.Sprintf("http://localhost:8080/%s", shortCode)
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"short_url": shortURL,

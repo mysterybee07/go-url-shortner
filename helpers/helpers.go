@@ -24,7 +24,7 @@ func EncodeToBase62(data []byte) string {
 }
 
 // generates a random short key for URLs
-func GenerateShortKey() string {
+func GenerateShortCode() string {
 
 	b := make([]byte, 3)
 	_, err := rand.Read(b)
