@@ -44,6 +44,16 @@ func (urlShortner *UrlShortener) ShortenUrl(c *fiber.Ctx) error {
 		})
 	}
 
+	for shortCode, longURL := range urlShortner.Urls {
+		if longURL == req.LongURL {
+			// Return the existing short URL
+			shortURL := fmt.Sprintf("http://localhost:8080/%s", shortCode)
+			return c.Status(fiber.StatusOK).JSON(fiber.Map{
+				"short_url": shortURL,
+			})
+		}
+	}
+
 	shortCode := helpers.GenerateShortCode()
 	urlShortner.Urls[shortCode] = req.LongURL
 
